@@ -29,8 +29,8 @@ void loop() {
 void track () {
   for ( timesOut = 1; timesOut <= 255; timesOut++) { // i dont quite understand the power of this
 
-//         in the condition of the for loop I should be working with the xyz values
-//         
+    //         in the condition of the for loop I should be working with the xyz values
+    //
 
     int x = analogRead(xpin); // read in from x pin
     delay(100);
@@ -52,7 +52,7 @@ void track () {
     Serial.print("\n");  // new line
 
     //if ( x > 550 or x < 490 ) {  // x axis threshold
-    if (currentPlacex == ( x > 550 or x < 490)) {
+    if  ( x > 550 or x < 490) {
 
       // timesOut ;
     }
@@ -61,7 +61,7 @@ void track () {
     //    digitalWrite(ledPin, LOW);
     //  }
     //if ( y > 550 or y < 490) {   // y axis threshold
-    if (currentPlacey == ( x > 550 or x < 490)) {
+    if  ( x > 550 or x < 490) {
 
       timesOut ++;
 
@@ -73,7 +73,7 @@ void track () {
 
     //if ( z > 650 or z < 610 ) {  // z axis threshold
 
-    if (currentPlacez == ( x > 550 or x < 490)) {
+    if ( z > 550 or z < 490) {
 
       timesOut ++;
     }
@@ -122,5 +122,7 @@ void setled() {
 // how do you say every time xyz goes out of the threshold add
 //one to timesOut
 
-
+//rather than make code based on numbers base it on change
+// basically create the same scenario as the button states from the labs in the 
+//past with analog reads
 
