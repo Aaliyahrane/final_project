@@ -7,9 +7,14 @@ int ledPin1 = 31;
 int ledPin2 = 30;
 
 int timesOut = 0; // counter of sorts
+
 int currentPlacex = 0;
+int lastPlacex = 0;
 int currentPlacey = 0;
+int lastPlacey = 0;
 int currentPlacez = 0;
+int lastPlacez = 0;
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
@@ -27,76 +32,61 @@ void loop() {
 }
 
 void track () {
-  for ( timesOut = 1; timesOut <= 255; timesOut++) { // i dont quite understand the power of this
 
-    //         in the condition of the for loop I should be working with the xyz values
-    //
+  int x = analogRead(xpin); // read in from x pin
+  delay(100);
+  int y = analogRead(ypin); // read in from y pin
+  delay(100);
+  int z = analogRead(zpin); //read in from z pin
 
-    int x = analogRead(xpin); // read in from x pin
-    delay(100);
-    int y = analogRead(ypin); // read in from y pin
-    delay(100);
-    int z = analogRead(zpin); //read in from z pin
+  lastPlacex = currentPlacex; // lastplacex is equal to currentplacex
+  currentPlacex = analogRead(xpin); //currentplacex is equal to what the pin reads in
 
-
-    Serial.print(x); //print out x pin reading
-    Serial.print("\t"); // tab over
-
-    Serial.print(y);  //print out y pin reading
-    Serial.print("\t");  // tab over
-
-    Serial.print(z);  //print out z pin reading
-
-    Serial.print("\t");
-    Serial.print(timesOut);
-    Serial.print("\n");  // new line
-
-    //if ( x > 550 or x < 490 ) {  // x axis threshold
-    if  ( x > 550 or x < 490) {
-
-      // timesOut ;
-    }
-    //    digitalWrite(ledPin, HIGH);
-    //  } else {
-    //    digitalWrite(ledPin, LOW);
-    //  }
-    //if ( y > 550 or y < 490) {   // y axis threshold
-    if  ( x > 550 or x < 490) {
-
-      timesOut ++;
-
-    }
-    //    digitalWrite(ledPin1, HIGH);
-    //  } else {
-    //    digitalWrite(ledPin1, LOW);
-    //  }
-
-    //if ( z > 650 or z < 610 ) {  // z axis threshold
-
-    if ( z > 550 or z < 490) {
-
-      timesOut ++;
-    }
-
-
-    //    digitalWrite(ledPin2, HIGH);
-    //  } else {
-    //    digitalWrite(ledPin2, LOW);
-    //  }
+  if (currentPlacex > 550 && lastPlacex < 550) {   // if button state reads high and the last reads low,
+    timesOut ++;
 
   }
+
+  lastPlacey = currentPlacey; // lastplacex is equal to currentplacex
+  currentPlacey = analogRead(ypin); //currentplacex is equal to what the pin reads in
+
+  if (currentPlacey > 520 && lastPlacey < 520) {   // if button state reads high and the last reads low,
+    timesOut ++;
+  }
+  lastPlacez = currentPlacez; // lastplacex is equal to currentplacex
+  currentPlacez = analogRead(zpin); //currentplacex is equal to what the pin reads in
+
+  if (currentPlacez > 620 && lastPlacez < 620) {   // if button state reads high and the last reads low,
+    timesOut ++;
+  }
+  Serial.print(x); //print out x pin reading
+  Serial.print("\t"); // tab over
+
+  Serial.print(y);  //print out y pin reading
+  Serial.print("\t");  // tab over
+
+  Serial.print(z);  //print out z pin reading
+
+  Serial.print("\t");
+  Serial.print(timesOut);
+  Serial.print("\n");  // new line
+
 }
+
 
 void setled() {
 
-  if (timesOut >= 60) {
+  if (timesOut > 60) {
     digitalWrite(ledPin, HIGH);
 
-    if (timesOut >= 120) {
+    if (timesOut > 120) {
       digitalWrite(ledPin1, HIGH);
 
-      if (timesOut >= 250) {
+      if (timesOut > 180) {
         digitalWrite(ledPin2, HIGH);
+      }
+      if (timesOut > 200){  // just for demo purposes
+        timesOut = 0;
       }
     }
   }
@@ -105,7 +95,6 @@ void setled() {
 }
 
 
-// what makes motion important enough to track
 
 //need to create a threshhold that will count a movement
 //or step once the motion goes outside of that threshhold
@@ -123,6 +112,6 @@ void setled() {
 //one to timesOut
 
 //rather than make code based on numbers base it on change
-// basically create the same scenario as the button states from the labs in the 
+// basically create the same scenario as the button states from the labs in the
 //past with analog reads
 
