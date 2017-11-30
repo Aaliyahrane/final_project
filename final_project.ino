@@ -40,25 +40,26 @@ void track () {
   int z = analogRead(zpin); //read in from z pin
 
   lastPlacex = currentPlacex; // lastplacex is equal to currentplacex
-  currentPlacex = analogRead(xpin); //currentplacex is equal to what the pin reads in
+  currentPlacex = analogRead(xpin);
+  //currentplacex is equal to what the pin reads in
 
-  if (currentPlacex > 550 && lastPlacex < 550) {   // if button state reads high and the last reads low,
+  if ((currentPlacex >= 465 && lastPlacex < 465) or (currentPlacex <= 465 && lastPlacex > 465)) {
+    // if button state reads high and the last reads low,
     timesOut ++;
-
   }
-
   lastPlacey = currentPlacey; // lastplacex is equal to currentplacex
   currentPlacey = analogRead(ypin); //currentplacex is equal to what the pin reads in
 
-  if (currentPlacey > 520 && lastPlacey < 520) {   // if button state reads high and the last reads low,
+  if ((currentPlacey >= 600  && lastPlacey < 600) or (currentPlacey <= 600 && lastPlacey > 600)) {  // if button state reads high and the last reads low,
     timesOut ++;
   }
   lastPlacez = currentPlacez; // lastplacex is equal to currentplacex
   currentPlacez = analogRead(zpin); //currentplacex is equal to what the pin reads in
 
-  if (currentPlacez > 620 && lastPlacez < 620) {   // if button state reads high and the last reads low,
+  if ((currentPlacez >= 610  && lastPlacez < 610) or (currentPlacez <= 610 && lastPlacez > 610 )) {  // if button state reads high and the last reads low,
     timesOut ++;
   }
+
   Serial.print(x); //print out x pin reading
   Serial.print("\t"); // tab over
 
@@ -70,31 +71,31 @@ void track () {
   Serial.print("\t");
   Serial.print(timesOut);
   Serial.print("\n");  // new line
-
 }
 
 
 void setled() {
 
-  if (timesOut > 60) {
-    digitalWrite(ledPin, HIGH);
+  if (timesOut > 60 ) {
+    digitalWrite(ledPin, HIGH); // these values in regular use would be much higher to fit more over a day
 
-    if (timesOut > 120) {
+    if (timesOut > 120) {  // but for the purposes of demoing, they are lower
       digitalWrite(ledPin1, HIGH);
 
       if (timesOut > 180) {
         digitalWrite(ledPin2, HIGH);
       }
-      if (timesOut > 200){  // just for demo purposes
+      if (timesOut > 200) { // just for demo purposes
         timesOut = 0;
+        digitalWrite(ledPin, LOW);
+        digitalWrite(ledPin1, LOW);
+        digitalWrite(ledPin2, LOW);
       }
     }
   }
 
 
 }
-
-
 
 //need to create a threshhold that will count a movement
 //or step once the motion goes outside of that threshhold
@@ -114,4 +115,6 @@ void setled() {
 //rather than make code based on numbers base it on change
 // basically create the same scenario as the button states from the labs in the
 //past with analog reads
+
+// 11.30.17 - get steps to count while in my pocket
 
