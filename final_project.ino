@@ -22,8 +22,6 @@ int lastPlacez = 0;
 
 int modeSwitch = 29;
 
-
-
 unsigned long currentTime  = 0; //this variable will be overwritten by millis() each iteration of loop
 unsigned long pastTime     = 0; //no time has passed yet
 int           currentState = 0; //the default state
@@ -40,14 +38,10 @@ void setup() {
   pinMode(ledPin4, OUTPUT);
   pinMode(ledPin5, OUTPUT);
   pinMode(modeSwitch, INPUT);
-
-
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-
-  //time = millis();
   int x = analogRead(xpin); // read in from x pin
   delay(100);
   int y = analogRead(ypin); // read in from y pin
@@ -152,7 +146,6 @@ void loop() {
     }
 
     if ( seconds == 60 && activeCounter >= 40)   { // for demo purposes
-
       digitalWrite(ledPin3, HIGH);
     }
     else if ( seconds == 120 && activeCounter >= 80) {
@@ -178,23 +171,23 @@ void loop() {
     light and keep it on.
 */
 //11.9.17 -  need to relate times run with the xyz going out of the
-//threshold
+//threshold - DONE
 
 // 11.16.17 - how do you say every time xyz goes out of the threshold add
-//one to timesOut
+//one to timesOut - DONE
 
 //11.23.17 - rather than make code based on numbers base it on change
 // basically create the same scenario as the button states from the labs in the
-//past with analog reads
+//past with analog reads - DONE
 
 // 11.30.17 - get steps to count while in my pocket - DONE
 
 // 11.30.17 - add a switch or button that would set a mode saying that after you take
-// a certain amount of steps in a certain amount of time a light would go on
+// a certain amount of steps in a certain amount of time a light would go on - DONE
 
 // 11.30.17 - I need to find a way to make the switch not mess everything up and still function
 // need to get the active counter to be a second counter may not be able to set it equal to timesOut
 //from there get some kind of average and based on whether the time between the 100 steps is high or low turn on
-//different lights
+//different lights - DONE
 
 
